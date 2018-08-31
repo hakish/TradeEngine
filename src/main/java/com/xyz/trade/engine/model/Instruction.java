@@ -1,6 +1,8 @@
 package com.xyz.trade.engine.model;
 
 import static com.xyz.trade.engine.util.TEConstants.*;
+
+import com.sun.beans.editors.DoubleEditor;
 import com.xyz.trade.engine.util.TEUtil;
 
 
@@ -16,8 +18,14 @@ public class Instruction {
     }
 
     public Instruction(String[] fields) {
-
-
+        this.entity = fields[0];
+        this.buySell = BUYSELL.valueOf(fields[1]);
+        this.agreedFx = Double.parseDouble(fields[2]);
+        this.currency = fields[3];
+        this.instructionDate = fields[4];
+        this.settlementDate = fields[5];
+        this.units = Integer.parseInt(fields[6]);
+        this.pricePerUnit = Double.parseDouble(fields[7]);
     }
 
     private String entity;

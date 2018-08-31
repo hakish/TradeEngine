@@ -36,8 +36,8 @@ public abstract class AbstractReportGenerator implements IReportGenerator {
      */
     protected Map<String, Double> generateRankingsReportMap(List<Instruction> instuctions) {
 
-        Comparator<Map.Entry> rankingsComparator = ()
-        Map<String, Double> reportMap = new TreeMap<>();
+        Comparator<Map.Entry> rankingsComparator = (e1, e2) -> (int)(((Double) e1.getValue()) - ((Double) e2.getValue()));
+        Map<String, Double> reportMap = new TreeMap(rankingsComparator);
         for (Instruction instr  : instuctions) {
             Double tradeAmnt = reportMap.get(instr.getEntity());
             if (null == tradeAmnt) {
@@ -45,10 +45,8 @@ public abstract class AbstractReportGenerator implements IReportGenerator {
             } else {
                 tradeAmnt = tradeAmnt + (instr.getAgreedFx() * instr.getPricePerUnit() * instr.getUnits());
             }
-            reportMap.put(TEUtil.getDateStr(instr.getSettlementDate(), TEConstants.TEDATEFORMAT), tradeAmnt);
+            reportMap.put(instr.getEntity(), tradeAmnt);
         }
         return reportMap;
     }
-
-    protected
 }

@@ -4,11 +4,11 @@ import com.xyz.trade.engine.exception.TradeEngineException;
 import com.xyz.trade.engine.model.Instruction;
 import com.xyz.trade.engine.process.InstructionProcessor;
 import com.xyz.trade.engine.process.InstructionReader;
-import com.xyz.trade.engine.report.AbstractReportGenerator;
+import com.xyz.trade.engine.report.EntityRankingsForIncomingReportGenerator;
+import com.xyz.trade.engine.report.EntityRankingsForOutGoingReportGenerator;
 import com.xyz.trade.engine.report.SettledAmntIncomingReportGenerator;
 import com.xyz.trade.engine.report.SettledAmntOutGoingReportGenerator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TradeEngine {
@@ -29,5 +29,11 @@ public class TradeEngine {
 
         SettledAmntOutGoingReportGenerator smor = new SettledAmntOutGoingReportGenerator();
         smor.generate(instructions);
+
+        EntityRankingsForIncomingReportGenerator ier = new EntityRankingsForIncomingReportGenerator();
+        ier.generate(instructions);
+
+        EntityRankingsForOutGoingReportGenerator oer = new EntityRankingsForOutGoingReportGenerator();
+        oer.generate(instructions);
     }
 }
