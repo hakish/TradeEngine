@@ -21,5 +21,6 @@ Create a report that shows:
 
 ### Notes on Design
 * Wherever applicable design patterns like Factory/Strategy have been used for creation and usage of various business Rules
-* Single Responsibility principle of OOAD is adhered to whereever possible.
+* SOLID principles of OOAD is adhered to.
+* DRY is also another principle which is adhered, with code being reused as much as possible.
 
