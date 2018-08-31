@@ -24,3 +24,5 @@ Create a report that shows:
 * SOLID principles of OOAD is adhered to.
 * DRY is also another principle which is adhered, with code being reused as much as possible.
 
+### Class diagram
+![Alt text](ClassDiagramTradeEngine.png?raw=true "Class Diagram")
