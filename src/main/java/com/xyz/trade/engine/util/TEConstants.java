@@ -13,4 +13,5 @@ public class TEConstants {
     }
     public static String INCOMING = "Incoming";
     public static String OUTGOING = "Outgoing";
+    public static final String[] MIDDLEEASTERNCURRENCIES = new String[]{"AED", "SAR"};
 }

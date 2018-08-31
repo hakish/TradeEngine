@@ -7,11 +7,14 @@ import java.util.Map;
 
 import static com.xyz.trade.engine.util.TEConstants.INCOMING;
 
-public class EntityRankingsForIncomingReportGenerator extends AbstractReportGenerator {
+/**
+ * This class Ranks all of the entities based on their incoming settlement amount.
+ * Generates a report and prints it to the console.
+ */
+public class EntityRankingsByIncomingAmntReport extends AbstractReportGenerator {
 
     @Override
     public void generate(List<Instruction> instructions) {
-
         Map<String, Double> reportMap = generateRankingsReportMap(getSellInstructions(instructions));
         printRankingsReport(reportMap, INCOMING);
     }

@@ -2,10 +2,10 @@ package com.xyz.trade.engine;
 
 import com.xyz.trade.engine.exception.TradeEngineException;
 import com.xyz.trade.engine.model.Instruction;
-import com.xyz.trade.engine.process.InstructionProcessor;
 import com.xyz.trade.engine.process.CSVInstructionFileReader;
-import com.xyz.trade.engine.report.EntityRankingsForIncomingReportGenerator;
-import com.xyz.trade.engine.report.EntityRankingsForOutGoingReportGenerator;
+import com.xyz.trade.engine.process.InstructionProcessor;
+import com.xyz.trade.engine.report.EntityRankingsByIncomingAmntReport;
+import com.xyz.trade.engine.report.EntityRankingsByOutGoingAmountReport;
 import com.xyz.trade.engine.report.SettledAmntIncomingReportGenerator;
 import com.xyz.trade.engine.report.SettledAmntOutGoingReportGenerator;
 
@@ -37,11 +37,11 @@ public class TradeEngine {
         smor.generate(instructions);
 
         //3.3 Report - Entity Rankings based on Incoming Amount
-        EntityRankingsForIncomingReportGenerator ier = new EntityRankingsForIncomingReportGenerator();
+        EntityRankingsByIncomingAmntReport ier = new EntityRankingsByIncomingAmntReport();
         ier.generate(instructions);
 
         //3.4 Report - Entity Rankings based on Outgoing Amount
-        EntityRankingsForOutGoingReportGenerator oer = new EntityRankingsForOutGoingReportGenerator();
+        EntityRankingsByOutGoingAmountReport oer = new EntityRankingsByOutGoingAmountReport();
         oer.generate(instructions);
     }
 }

@@ -2,8 +2,7 @@ package com.xyz.trade.engine.process;
 
 import com.xyz.trade.engine.exception.TradeEngineException;
 import com.xyz.trade.engine.model.Instruction;
-import static com.xyz.trade.engine.util.TEConstants.*;
-import com.xyz.trade.engine.util.TEUtil;
+import com.xyz.trade.engine.util.TradeUtil;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -12,6 +11,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.xyz.trade.engine.util.TEConstants.COMMA;
+import static com.xyz.trade.engine.util.TEConstants.SAMPLE_CSV_PATH;
 
 /**
  * This class reads the instructions file in CSV format from
@@ -24,7 +26,7 @@ public class CSVInstructionFileReader implements IFileReader {
     public List<Instruction> read() throws TradeEngineException {
         try {
             BufferedReader bfr = new BufferedReader(new FileReader(new File(SAMPLE_CSV_PATH)));
-            List<String> lineList = bfr.lines().filter(TEUtil::isNotNullEmpty).collect(Collectors.toList());
+            List<String> lineList = bfr.lines().filter(TradeUtil::isNotNullEmpty).collect(Collectors.toList());
             if (null != lineList && lineList.size() > 0) {
                 List<Instruction> instructions = new ArrayList<>();
                 if (validateHeader(lineList.get(0))) {
@@ -50,11 +52,5 @@ public class CSVInstructionFileReader implements IFileReader {
     private boolean validateHeader(String s) {
         //returning true for now.
         return true;
-    }
-
-
-    @Override
-    public boolean read(String path) throws TradeEngineException {
-        throw new TradeEngineException(new UnsupportedOperationException());
     }
 }

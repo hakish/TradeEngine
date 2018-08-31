@@ -10,6 +10,5 @@ import java.util.List;
  */
 public interface IFileReader {
 
-    boolean read(String path) throws TradeEngineException;
     List<Instruction> read() throws TradeEngineException;
 }

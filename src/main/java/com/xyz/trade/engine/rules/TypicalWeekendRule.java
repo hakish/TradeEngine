@@ -1,11 +1,8 @@
 package com.xyz.trade.engine.rules;
 
-import com.xyz.trade.engine.exception.TradeEngineException;
 import com.xyz.trade.engine.model.Instruction;
 import com.xyz.trade.engine.util.TEConstants;
-import com.xyz.trade.engine.util.TEUtil;
 
-import java.time.LocalDate;
 import java.util.Arrays;
 
 /**
@@ -16,13 +13,17 @@ import java.util.Arrays;
  */
 public class TypicalWeekendRule extends AbstractWeekendRule {
 
-    private enum TypicalWeekend {
-        SATURDAY, SUNDAY;
+    @Override
+    protected String[] getWeekendDays() {
+        return new String[]{"SATURDAY", "SUNDAY"};
     }
 
     @Override
-    public boolean isWeekend(LocalDate date) {
-        return Arrays.stream(TypicalWeekend.values())
-                    .anyMatch(day -> day.name().equalsIgnoreCase(date.getDayOfWeek().name()));
+    public boolean canRuleApply(Instruction instruction) {
+        return doValidCurrencyCheck(instruction.getCurrency());
+    }
+
+    private boolean doValidCurrencyCheck(String currency) {
+        return !Arrays.asList(TEConstants.MIDDLEEASTERNCURRENCIES).contains(currency);
     }
 }

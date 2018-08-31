@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 /**
  * Utility class.
  */
-public class TEUtil {
+public class TradeUtil {
 
     /**
      * This method gets a string date in 'DD MMM YYYY' and

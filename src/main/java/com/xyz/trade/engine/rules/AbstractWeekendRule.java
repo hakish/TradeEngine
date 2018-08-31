@@ -1,11 +1,11 @@
 package com.xyz.trade.engine.rules;
 
-import com.xyz.trade.engine.exception.TradeEngineException;
 import com.xyz.trade.engine.model.Instruction;
 import com.xyz.trade.engine.util.TEConstants;
-import com.xyz.trade.engine.util.TEUtil;
+import com.xyz.trade.engine.util.TradeUtil;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 
 /**
  * This class follows the below business rule:-
@@ -23,16 +23,20 @@ public abstract class AbstractWeekendRule implements IRule {
 
     @Override
     public boolean apply(Instruction instruction) {
+
+        if(!canRuleApply(instruction)) {
+            return false;
+        }
         try {
             //1. Check if the settlement date is a weekend if so change it to next week day.
             LocalDate date = instruction.getSettlementDate();
             boolean isWeekendSD = isWeekend(date);
             if (isWeekendSD) {
+                System.out.println("Settlement Date "+date+" is falling on a weekend Get the next working day.");
                 date = getNextWorkingDay(date);
             }
-            instruction.setSettlementDate(TEUtil.getDateStr(date, TEConstants.TEDATEFORMAT));
+            instruction.setSettlementDate(TradeUtil.getDateStr(date, TEConstants.TEDATEFORMAT));
         } catch (Exception ex) {
-            //TODO ADD LOGGERS
         }
         return true;
     }
@@ -44,6 +48,12 @@ public abstract class AbstractWeekendRule implements IRule {
         return date;
     }
 
-    protected abstract boolean isWeekend(LocalDate date);
+    public boolean isWeekend(LocalDate date) {
+        return Arrays.stream(getWeekendDays())
+                .anyMatch(day -> day.equalsIgnoreCase(date.getDayOfWeek().name()));
+    }
+
+    protected abstract String[] getWeekendDays();
+    protected abstract boolean canRuleApply(Instruction instruction);
 
 }

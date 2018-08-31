@@ -8,16 +8,14 @@ import java.util.Map;
 import static com.xyz.trade.engine.util.TEConstants.OUTGOING;
 
 /**
- * This class aggregates all Outgoing settlement amount from
- * various instruction for a day.
+ * This class Ranks all of the entities based on their outgoing settlement amount.
  * Generates a report and prints it to the console.
  */
-public class SettledAmntOutGoingReportGenerator extends AbstractReportGenerator {
+public class EntityRankingsByOutGoingAmountReport extends AbstractReportGenerator {
 
     @Override
     public void generate(List<Instruction> instructions) {
-
-        Map<String, Double> reportMap = generateTradeAmntReportMap(getBuyInstructions(instructions));
-        printIOReport(reportMap, OUTGOING);
+        Map<String, Double> reportMap = generateRankingsReportMap(getBuyInstructions(instructions));
+        printRankingsReport(reportMap, OUTGOING);
     }
 }

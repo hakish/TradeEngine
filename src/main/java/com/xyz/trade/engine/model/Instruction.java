@@ -1,6 +1,6 @@
 package com.xyz.trade.engine.model;
 
-import com.xyz.trade.engine.util.TEUtil;
+import com.xyz.trade.engine.util.TradeUtil;
 
 import java.time.LocalDate;
 
@@ -69,7 +69,7 @@ public class Instruction {
     }
 
     public LocalDate getInstructionDate() {
-        return TEUtil.getDate(instructionDate, TEDATEFORMAT);
+        return TradeUtil.getDate(instructionDate, TEDATEFORMAT);
     }
 
     public void setInstructionDate(String instructionDate) {
@@ -77,7 +77,7 @@ public class Instruction {
     }
 
     public LocalDate getSettlementDate() {
-        return TEUtil.getDate(settlementDate, TEDATEFORMAT);
+        return TradeUtil.getDate(settlementDate, TEDATEFORMAT);
     }
 
     public void setSettlementDate(String settlementDate) {

@@ -2,7 +2,8 @@ package com.xyz.trade.engine.process;
 
 import com.xyz.trade.engine.exception.TradeEngineException;
 import com.xyz.trade.engine.model.Instruction;
-import com.xyz.trade.engine.rules.WeekendRuleFactory;
+import com.xyz.trade.engine.rules.IRule;
+import com.xyz.trade.engine.rules.TradeRuleFactory;
 
 import java.util.List;
 
@@ -14,9 +15,11 @@ public class InstructionProcessor implements IProcessor {
 
     @Override
     public boolean process(List<Instruction> instructions) throws TradeEngineException {
+
         //1. Apply the Weekend Rule
-        instructions.stream()
-                .forEach(instr -> WeekendRuleFactory.getWeekendRule(instr).apply(instr));
+       for(IRule rule : TradeRuleFactory.getRules()) {
+           instructions.stream().forEach(instr -> rule.apply(instr));
+       }
         return true;
     }
 }
