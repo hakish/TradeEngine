@@ -17,8 +17,8 @@ public class InstructionReader implements IFileReader {
     @Override
     public List<Instruction> read() throws TradeEngineException {
         try {
-            BufferedReader bfr = new BufferedReader(new FileReader(new File("sample/instructions.csv")));
-            List<String> lineList = bfr.lines().filter(TEUtil::isNullEmpty).collect(Collectors.toList());
+            BufferedReader bfr = new BufferedReader(new FileReader(new File("./src/main/resources/sample/instructions.csv")));
+            List<String> lineList = bfr.lines().filter(TEUtil::isNotNullEmpty).collect(Collectors.toList());
             if (null != lineList && lineList.size() > 0) {
                 List<Instruction> instructions = new ArrayList<>();
                 if (validateHeader(lineList.get(0))) {
@@ -37,7 +37,6 @@ public class InstructionReader implements IFileReader {
     }
 
     private boolean validateHeader(String s) {
-        System.out.print("All headers are valid.");
         return true;
     }
 

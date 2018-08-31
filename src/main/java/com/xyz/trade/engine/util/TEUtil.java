@@ -48,4 +48,13 @@ public class TEUtil {
     public static boolean isNullEmpty(String input) {
         return (null == input || input.trim().isEmpty());
     }
+
+    /**
+     * Checks if the input is null or empty.
+     * @param input
+     * @return
+     */
+    public static boolean isNotNullEmpty(String input) {
+        return !isNullEmpty(input);
+    }
 }

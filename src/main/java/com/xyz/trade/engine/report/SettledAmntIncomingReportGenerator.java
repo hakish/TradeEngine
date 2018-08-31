@@ -17,7 +17,10 @@ public class SettledAmntIncomingReportGenerator extends AbstractReportGenerator 
                 .collect(Collectors.toList());
 
         Map<String, Double> reportMap = generateTradeAmntReportMap(sellInstuctions);
+        System.out.println(":: ====================================================== :: ");
         System.out.println(":: Amount in USD settled incoming everyday :: ");
-        System.out.println(reportMap);
+        System.out.println(":: ====================================================== :: ");
+        reportMap.entrySet().stream().forEach(e -> System.out.println("-- Date is "+e.getKey()+" Incoming Amount is "+e.getValue()));
+        System.out.println(":: ====================================================== :: \n");
     }
 }

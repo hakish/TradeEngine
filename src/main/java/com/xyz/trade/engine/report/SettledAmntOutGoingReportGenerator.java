@@ -12,12 +12,15 @@ public class SettledAmntOutGoingReportGenerator extends AbstractReportGenerator 
     @Override
     public void generate(List<Instruction> instructions) {
 
-        List<Instruction> sellInstuctions = instructions.stream()
+        List<Instruction> buyInstuctions = instructions.stream()
                 .filter(instr ->  TEConstants.BUYSELL.B.name().equalsIgnoreCase(instr.getBuySell().name()))
                 .collect(Collectors.toList());
 
-        Map<String, Double> reportMap = generateTradeAmntReportMap(sellInstuctions);
+        Map<String, Double> reportMap = generateTradeAmntReportMap(buyInstuctions);
+        System.out.println(":: ====================================================== :: ");
         System.out.println(":: Amount in USD settled Outgoing everyday :: ");
-        System.out.println(reportMap);
+        System.out.println(":: ====================================================== :: ");
+        reportMap.entrySet().stream().forEach(e -> System.out.println("-- Date is "+e.getKey()+" Total Outgoing Amount is "+e.getValue()));
+        System.out.println(":: ====================================================== :: \n");
     }
 }

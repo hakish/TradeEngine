@@ -5,6 +5,7 @@ import com.xyz.trade.engine.util.TEConstants;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class EntityRankingsForOutGoingReportGenerator extends AbstractReportGenerator {
@@ -17,8 +18,15 @@ public class EntityRankingsForOutGoingReportGenerator extends AbstractReportGene
                 .collect(Collectors.toList());
 
         Map<String, Double> reportMap = generateRankingsReportMap(buyInstuctions);
+        System.out.println(":: ====================================================== :: ");
         System.out.println(":: Ranking of entities based on OutGoing Amount :: ");
-        System.out.println(reportMap);
+        System.out.println(":: ====================================================== :: ");
+        AtomicInteger rank = new AtomicInteger(0);
+        reportMap.entrySet().stream()
+                .forEach(e -> System.out.println("-- Entity " +e.getKey()
+                        +" Rank is " +rank.incrementAndGet()
+                +" Amount is "+e.getValue()));
+        System.out.println(":: ====================================================== :: \n");
 
     }
 }

@@ -5,6 +5,7 @@ import com.xyz.trade.engine.util.TEConstants;
 import com.xyz.trade.engine.util.TEUtil;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public abstract class AbstractReportGenerator implements IReportGenerator {
 
@@ -31,14 +32,13 @@ public abstract class AbstractReportGenerator implements IReportGenerator {
     /**
      * For a given list of instructions this method generates the
      * report map for entity rankings.
-     * @param instuctions
+     * @param instructions
      * @return
      */
-    protected Map<String, Double> generateRankingsReportMap(List<Instruction> instuctions) {
+    protected Map<String, Double> generateRankingsReportMap(List<Instruction> instructions) {
 
-        Comparator<Map.Entry> rankingsComparator = (e1, e2) -> (int)(((Double) e1.getValue()) - ((Double) e2.getValue()));
-        Map<String, Double> reportMap = new TreeMap(rankingsComparator);
-        for (Instruction instr  : instuctions) {
+        Map<String, Double> reportMap = new TreeMap();
+        for (Instruction instr  : instructions) {
             Double tradeAmnt = reportMap.get(instr.getEntity());
             if (null == tradeAmnt) {
                 tradeAmnt = instr.getAgreedFx() * instr.getPricePerUnit() * instr.getUnits();
@@ -47,6 +47,10 @@ public abstract class AbstractReportGenerator implements IReportGenerator {
             }
             reportMap.put(instr.getEntity(), tradeAmnt);
         }
-        return reportMap;
+        Map<String, Double> sortedMap = new LinkedHashMap();
+        reportMap.entrySet().stream().sorted(Map.Entry.<String, Double>comparingByValue().reversed())
+                .forEach(e1 -> sortedMap.put(e1.getKey(), e1.getValue()));
+        return sortedMap;
     }
+
 }
