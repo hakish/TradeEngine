@@ -5,6 +5,8 @@ import com.xyz.trade.engine.util.TEConstants;
 import com.xyz.trade.engine.util.TEUtil;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 public abstract class AbstractReportGenerator implements IReportGenerator {
 
@@ -31,14 +33,13 @@ public abstract class AbstractReportGenerator implements IReportGenerator {
     /**
      * For a given list of instructions this method generates the
      * report map for entity rankings.
-     * @param instuctions
+     * @param instructions
      * @return
      */
-    protected Map<String, Double> generateRankingsReportMap(List<Instruction> instuctions) {
+    protected Map<String, Double> generateRankingsReportMap(List<Instruction> instructions) {
 
-        Comparator<Map.Entry> rankingsComparator = (e1, e2) -> (int)(((Double) e1.getValue()) - ((Double) e2.getValue()));
-        Map<String, Double> reportMap = new TreeMap(rankingsComparator);
-        for (Instruction instr  : instuctions) {
+        Map<String, Double> reportMap = new TreeMap();
+        for (Instruction instr  : instructions) {
             Double tradeAmnt = reportMap.get(instr.getEntity());
             if (null == tradeAmnt) {
                 tradeAmnt = instr.getAgreedFx() * instr.getPricePerUnit() * instr.getUnits();
@@ -47,6 +48,51 @@ public abstract class AbstractReportGenerator implements IReportGenerator {
             }
             reportMap.put(instr.getEntity(), tradeAmnt);
         }
-        return reportMap;
+        Map<String, Double> sortedMap = new LinkedHashMap();
+        reportMap.entrySet().stream().sorted(Map.Entry.<String, Double>comparingByValue().reversed())
+                .forEach(e1 -> sortedMap.put(e1.getKey(), e1.getValue()));
+        return sortedMap;
+    }
+
+    /**
+     * Filters out all the BUY instructions from a given LIST
+     * @param instructions
+     * @return
+     */
+    protected List<Instruction> getBuyInstructions(List<Instruction> instructions) {
+        return instructions.stream()
+                .filter(instr ->  TEConstants.BUYSELL.S.name().equalsIgnoreCase(instr.getBuySell().name()))
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Filters out all the SELL instructions from a given LIST
+     * @param instructions
+     * @return
+     */
+    protected List<Instruction> getSellInstructions(List<Instruction> instructions) {
+        return instructions.stream()
+                .filter(instr ->  TEConstants.BUYSELL.S.name().equalsIgnoreCase(instr.getBuySell().name()))
+                .collect(Collectors.toList());
+    }
+
+    protected void printIOReport(Map<String, Double> reportMap, String io) {
+        System.out.println(":: ====================================================== :: ");
+        System.out.println(":: Amount in USD settled " + io + " everyday :: ");
+        System.out.println(":: ====================================================== :: ");
+        reportMap.entrySet().stream().forEach(e -> System.out.println("-- Date is "+e.getKey()+" Incoming Amount is "+e.getValue()));
+        System.out.println(":: ====================================================== :: \n");
+    }
+
+    protected void printRankingsReport(Map<String, Double> reportMap, String io) {
+        System.out.println(":: ====================================================== :: ");
+        System.out.println(":: Ranking of entities based on "+io+" :: ");
+        System.out.println(":: ====================================================== :: ");
+        AtomicInteger rank = new AtomicInteger(0);
+        reportMap.entrySet().stream()
+                .forEach(e -> System.out.println("-- Entity " +e.getKey()
+                        +" Rank is " +rank.incrementAndGet()
+                        +" Amount is "+e.getValue()));
+        System.out.println(":: ====================================================== :: \n");
     }
 }

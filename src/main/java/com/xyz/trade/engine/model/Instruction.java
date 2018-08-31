@@ -1,12 +1,11 @@
 package com.xyz.trade.engine.model;
 
-import static com.xyz.trade.engine.util.TEConstants.*;
-
-import com.sun.beans.editors.DoubleEditor;
 import com.xyz.trade.engine.util.TEUtil;
 
-
 import java.time.LocalDate;
+
+import static com.xyz.trade.engine.util.TEConstants.BUYSELL;
+import static com.xyz.trade.engine.util.TEConstants.TEDATEFORMAT;
 
 /**
  * This model class represents an instruction sent by the client to the Bank for execution.
@@ -19,13 +18,13 @@ public class Instruction {
 
     public Instruction(String[] fields) {
         this.entity = fields[0];
-        this.buySell = BUYSELL.valueOf(fields[1]);
-        this.agreedFx = Double.parseDouble(fields[2]);
-        this.currency = fields[3];
-        this.instructionDate = fields[4];
-        this.settlementDate = fields[5];
-        this.units = Integer.parseInt(fields[6]);
-        this.pricePerUnit = Double.parseDouble(fields[7]);
+        this.buySell = BUYSELL.valueOf(fields[1].trim());
+        this.agreedFx = Double.parseDouble(fields[2].trim());
+        this.currency = fields[3].trim();
+        this.instructionDate = fields[4].replace("'","").trim();
+        this.settlementDate = fields[5].replace("'","").trim();
+        this.units = Integer.parseInt(fields[6].trim());
+        this.pricePerUnit = Double.parseDouble(fields[7].trim());
     }
 
     private String entity;

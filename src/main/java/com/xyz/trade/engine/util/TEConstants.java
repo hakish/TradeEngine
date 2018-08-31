@@ -4,7 +4,13 @@ public class TEConstants {
 
     public static String TEDATEFORMAT = "dd MMM yyyy";
 
+    public static String SAMPLE_CSV_PATH = "./src/main/resources/sample/instructions.csv";
+
+    public static final String COMMA = ",";
+
     public enum BUYSELL {
         B, S;
     }
+    public static String INCOMING = "Incoming";
+    public static String OUTGOING = "Outgoing";
 }

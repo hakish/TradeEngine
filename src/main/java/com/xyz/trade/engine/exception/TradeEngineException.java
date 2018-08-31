@@ -1,5 +1,8 @@
 package com.xyz.trade.engine.exception;
 
+/**
+ * Custom Exception class for Trade Engine.
+ */
 public class TradeEngineException extends Exception {
 
     public TradeEngineException() {
