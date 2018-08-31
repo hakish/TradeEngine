@@ -41,7 +41,7 @@ public abstract class AbstractWeekendRule implements IRule {
         return true;
     }
 
-    private LocalDate getNextWorkingDay(LocalDate date) {
+    public LocalDate getNextWorkingDay(LocalDate date) {
         while (isWeekend(date)) {
             date = date.plusDays(1);
         }
