@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Interface for report generation process.
  */
-public interface IReportGenerator {
+public interface IReport {
 
     void generate(List<Instruction> instructions);
 }

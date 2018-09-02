@@ -4,8 +4,8 @@ import com.xyz.trade.engine.exception.TradeEngineException;
 import com.xyz.trade.engine.model.Instruction;
 import com.xyz.trade.engine.process.CSVInstructionFileReader;
 import com.xyz.trade.engine.process.InstructionProcessor;
-import com.xyz.trade.engine.report.AbstractReportGenerator;
-import com.xyz.trade.engine.report.TradeEngineReportGeneratorFactory;
+import com.xyz.trade.engine.report.AbstractReport;
+import com.xyz.trade.engine.report.TradeEngineReportFactory;
 
 import java.util.Arrays;
 import java.util.List;
@@ -27,7 +27,7 @@ public class TradeEngine {
         processor.process(instructions);
 
         //3. Generate the reports.
-        AbstractReportGenerator[] reportGenerators = TradeEngineReportGeneratorFactory.getAllReportGenerators();
+        AbstractReport[] reportGenerators = TradeEngineReportFactory.getAllReportGenerators();
         Arrays.asList(reportGenerators).stream().forEach(report -> report.generate(instructions));
     }
 }

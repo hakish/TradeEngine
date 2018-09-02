@@ -11,7 +11,7 @@ import static com.xyz.trade.engine.util.TEConstants.OUTGOING;
  * This class Ranks all of the entities based on their outgoing settlement amount.
  * Generates a report and prints it to the console.
  */
-public class EntityRankingsByOutGoingAmountReport extends AbstractReportGenerator {
+public class EntityRankingsByOutGoingAmountReport extends AbstractReport {
 
     @Override
     public void generate(List<Instruction> instructions) {

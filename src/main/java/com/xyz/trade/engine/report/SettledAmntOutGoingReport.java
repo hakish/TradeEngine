@@ -12,7 +12,7 @@ import static com.xyz.trade.engine.util.TEConstants.OUTGOING;
  * various instruction for a day.
  * Generates a report and prints it to the console.
  */
-public class SettledAmntOutGoingReportGenerator extends AbstractReportGenerator {
+public class SettledAmntOutGoingReport extends AbstractReport {
 
     @Override
     public void generate(List<Instruction> instructions) {
