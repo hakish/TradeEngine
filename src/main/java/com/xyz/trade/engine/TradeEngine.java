@@ -4,11 +4,10 @@ import com.xyz.trade.engine.exception.TradeEngineException;
 import com.xyz.trade.engine.model.Instruction;
 import com.xyz.trade.engine.process.CSVInstructionFileReader;
 import com.xyz.trade.engine.process.InstructionProcessor;
-import com.xyz.trade.engine.report.EntityRankingsByIncomingAmntReport;
-import com.xyz.trade.engine.report.EntityRankingsByOutGoingAmountReport;
-import com.xyz.trade.engine.report.SettledAmntIncomingReportGenerator;
-import com.xyz.trade.engine.report.SettledAmntOutGoingReportGenerator;
+import com.xyz.trade.engine.report.AbstractReportGenerator;
+import com.xyz.trade.engine.report.TradeEngineReportGeneratorFactory;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -28,20 +27,7 @@ public class TradeEngine {
         processor.process(instructions);
 
         //3. Generate the reports.
-        //3.1 Report - Amount in USD settled incoming everyday
-        SettledAmntIncomingReportGenerator smir = new SettledAmntIncomingReportGenerator();
-        smir.generate(instructions);
-
-        //3.2 Report - Amount in USD settled outgoing everyday
-        SettledAmntOutGoingReportGenerator smor = new SettledAmntOutGoingReportGenerator();
-        smor.generate(instructions);
-
-        //3.3 Report - Entity Rankings based on Incoming Amount
-        EntityRankingsByIncomingAmntReport ier = new EntityRankingsByIncomingAmntReport();
-        ier.generate(instructions);
-
-        //3.4 Report - Entity Rankings based on Outgoing Amount
-        EntityRankingsByOutGoingAmountReport oer = new EntityRankingsByOutGoingAmountReport();
-        oer.generate(instructions);
+        AbstractReportGenerator[] reportGenerators = TradeEngineReportGeneratorFactory.getAllReportGenerators();
+        Arrays.asList(reportGenerators).stream().forEach(report -> report.generate(instructions));
     }
 }

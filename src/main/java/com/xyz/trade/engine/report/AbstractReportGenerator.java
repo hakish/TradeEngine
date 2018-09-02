@@ -89,7 +89,7 @@ public abstract class AbstractReportGenerator implements IReportGenerator {
      */
     protected void printIOReport(Map<String, Double> reportMap, String io) {
         System.out.println("\n:: ====================================================== :: ");
-        System.out.println(":: Amount in USD settled " + io + " everyday :: ");
+        System.out.println(":: Report - Amount in USD settled " + io + " everyday :: ");
         System.out.println(":: ====================================================== :: ");
         reportMap.entrySet().stream().forEach(e -> System.out.println("-- Date is "+e.getKey()+" Incoming Amount is "+e.getValue()));
         System.out.println(":: ====================================================== :: \n");
@@ -102,7 +102,7 @@ public abstract class AbstractReportGenerator implements IReportGenerator {
      */
     protected void printRankingsReport(Map<String, Double> reportMap, String io) {
         System.out.println("\n:: ====================================================== :: ");
-        System.out.println(":: Ranking of entities based on "+io+" :: ");
+        System.out.println(":: Report - Ranking of entities based on "+io+" :: ");
         System.out.println(":: ====================================================== :: ");
         AtomicInteger rank = new AtomicInteger(0);
         reportMap.entrySet().stream()
