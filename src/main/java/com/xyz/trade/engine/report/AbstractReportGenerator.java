@@ -4,10 +4,7 @@ import com.xyz.trade.engine.model.Instruction;
 import com.xyz.trade.engine.util.TEConstants;
 import com.xyz.trade.engine.util.TradeUtil;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
@@ -27,9 +24,9 @@ public abstract class AbstractReportGenerator implements IReportGenerator {
         for (Instruction instr  : instuctions) {
             Double tradeAmnt = reportMap.get(TradeUtil.getDateStr(instr.getSettlementDate(), TEConstants.TEDATEFORMAT));
             if (null == tradeAmnt) {
-                tradeAmnt = instr.getAgreedFx() * instr.getPricePerUnit() * instr.getUnits();
+                tradeAmnt = instr.getTradeAmntInUSD();
             } else {
-                tradeAmnt = tradeAmnt + (instr.getAgreedFx() * instr.getPricePerUnit() * instr.getUnits());
+                tradeAmnt = tradeAmnt + instr.getTradeAmntInUSD();
             }
             reportMap.put(TradeUtil.getDateStr(instr.getSettlementDate(), TEConstants.TEDATEFORMAT), tradeAmnt);
         }
@@ -44,19 +41,11 @@ public abstract class AbstractReportGenerator implements IReportGenerator {
      */
     protected Map<String, Double> generateRankingsReportMap(List<Instruction> instructions) {
 
-        Map<String, Double> reportMap = new TreeMap();
-        for (Instruction instr  : instructions) {
-            Double tradeAmnt = reportMap.get(instr.getEntity());
-            if (null == tradeAmnt) {
-                tradeAmnt = instr.getAgreedFx() * instr.getPricePerUnit() * instr.getUnits();
-            } else {
-                tradeAmnt = tradeAmnt + (instr.getAgreedFx() * instr.getPricePerUnit() * instr.getUnits());
-            }
-            reportMap.put(instr.getEntity(), tradeAmnt);
-        }
+        List<Instruction> sortedList = instructions.stream()
+                .sorted(Comparator.comparing(Instruction::getTradeAmntInUSD).reversed())
+                .collect(Collectors.toList());
         Map<String, Double> sortedMap = new LinkedHashMap();
-        reportMap.entrySet().stream().sorted(Map.Entry.<String, Double>comparingByValue().reversed())
-                .forEach(e1 -> sortedMap.put(e1.getKey(), e1.getValue()));
+        sortedList.stream().forEach(instr -> sortedMap.putIfAbsent(instr.getEntity(), instr.getTradeAmntInUSD()));
         return sortedMap;
     }
 

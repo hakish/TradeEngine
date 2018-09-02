@@ -25,6 +25,7 @@ public class Instruction {
         this.settlementDate = fields[5].replace("'","").trim();
         this.units = Integer.parseInt(fields[6].trim());
         this.pricePerUnit = Double.parseDouble(fields[7].trim());
+        this.tradeAmntInUSD = agreedFx * pricePerUnit * units;
     }
 
     private String entity;
@@ -35,6 +36,7 @@ public class Instruction {
     private String settlementDate;
     private int units;
     private double pricePerUnit;
+    private double tradeAmntInUSD;
 
     public String getEntity() {
         return entity;
@@ -98,5 +100,13 @@ public class Instruction {
 
     public void setPricePerUnit(double pricePerUnit) {
         this.pricePerUnit = pricePerUnit;
+    }
+
+    public double getTradeAmntInUSD() {
+        return tradeAmntInUSD;
+    }
+
+    public void setTradeAmntInUSD(double tradeAmntInUSD) {
+        this.tradeAmntInUSD = tradeAmntInUSD;
     }
 }

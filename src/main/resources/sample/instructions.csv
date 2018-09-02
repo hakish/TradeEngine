@@ -1,7 +1,9 @@
 'Entity','Buy/Sell','AgreedFx','Currency','InstructionDate','SettlementDate','Units','Price per unit'
-foo,B,0.50,SGP,'01 Jan 2016', '02 Jan 2016',200,100.25
+foo,B,1,SGP,'01 Jan 2016', '11 Jan 2016',500,150.25
 bar,S,0.22,AED,'05 Jan 2016', '07 Jan 2016',450,150.5
+bar,S,0.22,AED,'05 Jan 2016', '07 Jan 2016',550,150.5
 zoo,B,0.80,INR,'05 Jan 2016', '06 Jan 2016',200,150.25
-Apple,B,0.80,INR,'08 Jan 2016', '09 Jan 2016',500,350
+Apple,B,0.80,INR,'08 Jan 2016', '09 Jan 2016',500,100
 Infy,S,0.80,INR,'30 Aug 2018', '01 Sep 2018',600,150
 tesla,B,0.22,SAR,'29 Aug 2018', '31 Aug 2018',450,150.5
+Apple,B,0.80,INR,'09 Jan 2016', '11 Jan 2016',800,100
