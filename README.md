@@ -14,6 +14,7 @@ Create a report that shows:
 
 ### Running the appication
 * The application is implemented in JDK 1.8 as a maven project.
+* The application expects the instructions to be in a CSV file (kept under the resources/sample folder).
 * There is a client class TradeEngineClient with a main method that can be used to run the program.
 * Junits are present which cover the critical tests with respect to the rules.
 * The output should be visible in the console.
