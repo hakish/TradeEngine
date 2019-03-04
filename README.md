@@ -27,3 +27,5 @@ Create a report that shows:
 
 ### Class diagram
 ![Alt text](ClassDiagramTradeEngine.png?raw=true "Class Diagram")
+
+
