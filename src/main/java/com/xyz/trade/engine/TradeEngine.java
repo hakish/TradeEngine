@@ -28,6 +28,6 @@ public class TradeEngine {
 
         //3. Generate the reports.
         AbstractReport[] reportGenerators = TradeEngineReportFactory.getAllReportGenerators();
-        Arrays.asList(reportGenerators).stream().forEach(report -> report.generate(instructions));
+        Arrays.asList(reportGenerators).stream().forEach(reportGenerator -> reportGenerator.generate(instructions));
     }
 }
